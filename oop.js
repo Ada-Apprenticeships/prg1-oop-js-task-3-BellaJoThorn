@@ -9,20 +9,23 @@ function validInteger (value) {
 function validatePriority (priority) {
     priority = parseInt(priority);
     return (priority === PRIORITY["LOW"] || priority === PRIORITY["MEDIUM"] || priority === PRIORITY["HIGH"] || priority === PRIORITY["URGENT"]) ? priority : PRIORITY["LOW"];
- }
+}
 
+//Function that padds out digits for the date and time
+function formatTwoDigits(number){
+  return number.toString().padStart(2, '0')
+}
 
 function todaysDate () {
   const now = new Date();
-  const day = now.getDate().toString().padStart(2, '0');
-  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = formatTwoDigits(now.getDate())
+  const month = formatTwoDigits(now.getMonth()+ 1)
   const year = now.getFullYear();
-  const hours = now.getHours().toString().padStart(2, '0');
-  const minutes = now.getMinutes().toString().padStart(2, '0');
-  const seconds = now.getSeconds().toString().padStart(2, '0');
+  const hours = formatTwoDigits(now.getHours());
+  const minutes = formatTwoDigits(now.getMinutes())
+  const seconds = formatTwoDigits(now.getSeconds())
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
-
 
 class Task {
 
@@ -54,56 +57,41 @@ class Task {
   
 }
 
-
 class ToDo {
 
-  constructor(tasks){
-    this.tasksList = []
+  constructor(){
+    //Creates the tasks array
+    this.tasks = []
   }
 
+  //Appends a new task to the tasks array
   add(Task){
-    this.tasksList.push(Task);
-    return this.tasksList.length;
+    this.tasks.push(Task);
+    return this.tasks.length;
   }
 
+  //Filters the array to remove the task with the given title
   remove(title){
-    let removed = false
-    for (let i = 0; i < this.tasksList.length; i++) {
-      if (this.tasksList[i].title === title) {
-        this.tasksList.splice(i, 1)
-        removed = true
-      }
-    }
-    return removed
+    const initialLength = this.tasks.length;
+    this.tasks = this.tasks.filter(task => task.title !== title);
+    //Returns true if there are less tasks after the removal
+    return this.tasks.length < initialLength;
   }
 
+  //Finds a task in the array by its title
   task(title) {
-    for (let i = 0; i < this.tasksList.length; i++) {
-      if (this.tasksList[i].title === title) {
-        return this.tasksList[i]; 
-      }
-    }
-    throw new Error(`Task '${title}' Not Found`);
-  }
+     if (this.tasks.find(task => task.title === title)) {
+       return Task;
+     //Throws an error if the task was not found 
+     } throw new Error(`Task '${title}' Not Found`);
+   }
 
+  //Filters tasks due to the priority condition and maps it into the correct format
   list(priority = 0) {
-    let result = [];
-    for (let i = 0; i < this.tasksList.length; i++) {
-      if (priority === 0 || this.tasksList[i].priority === priority) {
-        result.push([this.tasksList[i].added, this.tasksList[i].title, this.tasksList[i].priority]);
-      }
-    }
-    return result;
+    return this.tasks.filter(task => priority === 0 || task.priority === priority).map(task => [task.added, task.title, task.priority]);
   }
 
 }
-
-
-
-
-
-
-
 
 // Leave this code here for the automated tests
 module.exports = {
