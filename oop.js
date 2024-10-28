@@ -1,9 +1,7 @@
 PRIORITY = { "LOW": 1, "MEDIUM": 3, "HIGH": 5, "URGENT": 7 };
 
-
 function validInteger (value) { 
-    const regEx = /^[0-9]\d*$/
-    return regEx.test(value.toString())
+  return /^[0-9]\d*$/.test(value.toString())
 }
 
 function validatePriority (priority) {
@@ -17,6 +15,7 @@ function formatTwoDigits(number){
 }
 
 function todaysDate () {
+  
   const now = new Date();
   const day = formatTwoDigits(now.getDate())
   const month = formatTwoDigits(now.getMonth()+ 1)
@@ -25,6 +24,7 @@ function todaysDate () {
   const minutes = formatTwoDigits(now.getMinutes())
   const seconds = formatTwoDigits(now.getSeconds())
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+
 }
 
 class Task {
