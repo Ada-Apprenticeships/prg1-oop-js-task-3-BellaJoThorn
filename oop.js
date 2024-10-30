@@ -1,7 +1,7 @@
 PRIORITY = { "LOW": 1, "MEDIUM": 3, "HIGH": 5, "URGENT": 7 };
 
 function validInteger (value) { 
-  return /^[0-9]\d*$/.test(value.toString())
+  return /^[0-9]\d*$/.test(value.toString());
 }
 
 function validatePriority (priority) {
@@ -11,27 +11,27 @@ function validatePriority (priority) {
 
 //Function that padds out digits for the date and time
 function formatTwoDigits(number){
-  return number.toString().padStart(2, '0')
+  return number.toString().padStart(2, '0');
 }
 
 function todaysDate () {
   
   const now = new Date();
-  const day = formatTwoDigits(now.getDate())
-  const month = formatTwoDigits(now.getMonth()+ 1)
+  const day = formatTwoDigits(now.getDate());
+  const month = formatTwoDigits(now.getMonth()+ 1);
   const year = now.getFullYear();
   const hours = formatTwoDigits(now.getHours());
-  const minutes = formatTwoDigits(now.getMinutes())
-  const seconds = formatTwoDigits(now.getSeconds())
+  const minutes = formatTwoDigits(now.getMinutes());
+  const seconds = formatTwoDigits(now.getSeconds());
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 
 }
 
 class Task {
 
-  _title
-  _priority
-  _added
+  _title;
+  _priority;
+  _added;
 
   constructor(title, priority){
     this._title = title;
@@ -61,7 +61,7 @@ class ToDo {
 
   constructor(){
     //Creates the tasks array
-    this.tasks = []
+    this.tasks = [];
   }
 
   //Appends a new task to the tasks array
